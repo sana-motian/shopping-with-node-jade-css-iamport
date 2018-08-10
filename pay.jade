@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title  결제하기
+  body
+    table
+      caption 구매자 정보
+      tr
+        td 이름
+        td Database 연동해서 이름 넣기
+      tr
+        td 휴대폰 번호
+        td Database 연동해서 번호 넣기
+    table
+      caption 결제 정보
+      tr
+        td  총 결제금액
+        td= totalprice
+      tr
+        td  결제 방법
+        td
+          label
+            input(type='radio', name='how_pay', value='cardpay')
+            | 신용/체크카드
+          label
+            input(type='radio', name='how_pay', value='phonepay')
+            | 휴대폰
+          label
+            input(type='radio', name='how_pay', value='accountpay')
+            | 무통장입금(가상계좌)
+            script(src='payscript.js')
+    label
+      input(type='checkbox', autofocus='', required='')
+      | (필수) 구매조건 확인 및 결제대행 서비스 약관 동의
+    p 위 주문 내용을 확인하였으며, 결제에 동의합니다.
+      a(href='/pay_ing') 결제
+      input(type='submit', name='pay', value='결제하기')
