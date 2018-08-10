@@ -1,0 +1,56 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    style
+      include reset.css
+      include style.css
+      include cartTableStyle.css
+  body
+    h1 cart
+    ul
+      a(href='/cart') cart
+    ul
+      - var url = function(str) {
+      -   return '/cart/'+ str;
+      - }
+    ul
+      table.cart
+        thead
+          tr.head
+            th
+              .checkbox
+                label
+                  input(type='checkbox',name='checkAll',onclick='checkAll()',id='cartItemAllCheck')
+                  | 전체선택
+            th 상품정보
+            th 상품금액
+        tbody
+          if cart
+            each val,index in cart
+              if(parseInt(cart[index])>0)
+                tr
+                  th(rowspan="2")
+                    .checkbox
+                      label
+                        input(type='checkbox',name='checkEach')
+                        | 선택
+                  td
+                    h2= products[index].title
+                  td(rowspan="2")
+                    h2= parseInt(products[index].price) * parseInt(cart[index])
+                tr
+                  td
+                    h2 #{ products[index].price } * #{cart[index]} =
+                    form(action='/cart/edit/#{index}',method='post')
+                      input(name='products_quantity', type='number', min='1', value='1')
+                      input(type='submit')
+                    button(type='button', onclick="location.href='#{url(index)}'") 추가
+                    button(type='button', onclick="location.href='#{url('delete/'+index)}'") 빼기
+                    button(type='button', onclick="location.href='#{url('delete/'+index)}'" ) x
+            tr
+              td(colspan="3")
+                h2 총 상품 가격= #{totalprice} 원
+    ul
+      button(type='button', value='계속쇼핑하기', onclick="location.href='/products'") 계속쇼핑하기
+      button(type='button', value='pay', onclick="location.href='/pay'") PAY
